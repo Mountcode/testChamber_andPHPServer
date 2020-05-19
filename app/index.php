@@ -11,12 +11,20 @@
     <form action="" class="fomrd">
        имя
         <input type="text" placeholder="Имя" name="name">
+        <span class="error_name"></span>
         Email
         <input type="text" placeholder="Email" name="email">
+        <span class="error_email"></span>
         телефон
         <input type="text" placeholder="Телефон" name="phone">
+        <span class="error_phone"></span>
         <input type="button" value="отправить" class="send">
     </form>
+    <br/>
+    <hr>
+    <div class="loader">
+        
+    </div>
     <div class="result">
         
     </div>
