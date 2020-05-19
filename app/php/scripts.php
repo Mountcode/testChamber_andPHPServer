@@ -1,6 +1,6 @@
 <?php
 
-//sleep(2);
+sleep(2);
 
 $email = trim($_POST['email']);
 $phone = trim($_POST['phone']);

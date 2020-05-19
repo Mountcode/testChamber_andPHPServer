@@ -1,6 +1,6 @@
 $(function(){
     $('.send').on('click',function(){
-        
+        let serverResponceSucess = 0;
         let form = $('.fomrd');
         let res = $('.result');
         $('.loader').addClass('show');
@@ -11,14 +11,14 @@ $(function(){
                 res.html("Заявка отправлена");
             }
             else{
-                $('.loader').removeClass('show');
                 $('.send').removeAttr('disabled');
                 console.log(data.errors);
                 for (var key in data.errors) {
                     $('span[class*="error_'+key+'"]').text(data.errors[key]);
                 }
             }
-            
-        },'json'); 
+        },'json').always(function(){
+            $('.loader').removeClass('show');
+        }); 
     });
 })
