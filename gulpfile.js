@@ -39,17 +39,21 @@ gulp.task('scripts', function(){
 })
 
 //Лив превью
+
 gulp.task('browser-sync', function() {
     browserSync.init({
-		server:{
-			baseDir:'app'
-		},
+        proxy: "testchamber.loc",
 		notify: false
 	});
 });
 
 gulp.task('HTMLcode', function(){
     return gulp.src('app/*.html')
+    .pipe(browserSync.reload({stream: true}))
+})
+
+gulp.task('PHPcode', function(){
+    return gulp.src('app/*.php')
     .pipe(browserSync.reload({stream: true}))
 })
 
@@ -67,6 +71,7 @@ gulp.task('watch', function() {
 //    gulp.watch('app/js/**/*.js', browserSync.reload);
     gulp.watch('app/js/*.js', gulp.parallel('JScode'));
     gulp.watch('app/*.html', gulp.parallel('HTMLcode'));
+    gulp.watch('app/*.php', gulp.parallel('PHPcode'));
 }); 
 
 
