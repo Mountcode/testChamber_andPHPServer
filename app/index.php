@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Полигон 22</title>
+    <title>Полигон 45:00</title>
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 

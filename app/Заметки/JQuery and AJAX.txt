@@ -2,8 +2,8 @@
 
 JQUERY
 
-***************************************
 
+***************************************
 Вместо:
 $(document).ready(function(){
 })
@@ -11,7 +11,14 @@ $(document).ready(function(){
 $(function(){
 
 })
+
+
+***************************************
+$('<option/>').appendTo('select') - такая запись создаст новый тег option
+
+
 ****************************************
+
 Не нужно вешать события просто //click
 Подвешивай их через on
 variable.on('click',function(){
@@ -26,6 +33,9 @@ http://jquery.page2page.ru/tags/ifr.html
 $(this).stop(true).fadeIn(300).fadeOut(300).fadeIn(300).fadeOut(300).fadeIn(300)
 так она не будет запускаться столько раз сколько кликнулит а только 1 раз.
 ****************************************
+$('select').find('option:gt(0)') - Запись выбрать все option в этом селекте после первого
+
+*****************************************
 Короткая запись "переключить класс у массива только у активного элемента"
 $('.menu a").removeClass('active).filter(this).addClass('active');
 
@@ -95,6 +105,14 @@ $.post('php/scripts.php',{name: '1',phone: '88',email: 'erer@er'}, function(data
 
 serialize() - функция создания и переработки в массив данных из формы для AJAX
 
+//
+Без serialize вызов функции post или get может выглядеть так
+
+$.post('php/scripts.php',{name: 'name',phone: '+734234'}, function(data){
+Т.е. вот так, в массиве там данные передаются
+
+//
+
 $form.serialize();
 
 let form = $('.fomrd');
@@ -111,12 +129,57 @@ $.post('php/scripts.php',form.serialize(), function(data){
 }, 'json');
 
 
-Есть возможность использовать спец функцию после ответа AJAX помимо стандартного колбека. это fail или always. Например функция always после ответа сервера, и не только ответа в ожидаемом формате но даже ответа о том что сервер упал, может выполнить свой колбек. Пишется это все через точку в продолжении функции post:
+Есть возможность использовать спец функцию после ответа AJAX помимо стандартного колбека. это fail,done или always. Например функция always после ответа сервера, и не только ответа в ожидаемом формате но даже ответа о том что сервер упал, может выполнить свой колбек. Пишется это все через точку в продолжении функции post:
 $.post('php/scripts.php',form.serialize(), function(data){
     console.log(data);
 }, 'json').always(function(){
     console.log('Сервер вернул ответ');
 });
+
+
+
+
+Теперь все то же самое но функцией $.ajax с более тонкими настройками:
+
+beforeSend
+complete
+error
+success
+
+
+//
+
+$.ajax({
+    url:  "php/scripts.php",
+    method: "POST",
+    data: form.serialize(),
+    dataType: 'json',
+    success: function(data){
+        $('span[class*="error_"]').text('');
+        if(data.res){
+            res.html("Заявка отправлена");
+        }
+        else{
+            $('.send').removeAttr('disabled');
+            console.log(data.errors);
+            for (var key in data.errors) {
+                $('span[class*="error_'+key+'"]').text(data.errors[key]);
+            }
+        }
+    },
+    error: function(){
+        res.html("Сервер не отвечает");
+    },
+    compite: function(){
+        $('.loader').removeClass('show');
+    },
+});
+
+
+
+
+
+
 
 /////////////=======================/////////////////////
 /////////////=======================/////////////////////
